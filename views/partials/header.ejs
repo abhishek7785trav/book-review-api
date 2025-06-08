@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book Review App</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <nav>
+        <a href="/books">📚 Books</a>
+        <% if (typeof user !== 'undefined' && user) { %>
+          | <a href="/books/add">Add Book</a>
+          | <a href="/profile">Profile</a> 
+
+          | <a href="/logout">Logout</a>
+        <% } else { %>
+          | <a href="/login">Login</a>
+          | <a href="/signup">Sign Up</a>
+        <% } %>
+      </nav>
+
+      <form action="/search" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search by title or author" required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 20px; min-height: 80vh;">

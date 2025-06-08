@@ -1,0 +1,14 @@
+<%- include('partials/header', { user: true }) %>
+<h2>Edit Review</h2>
+
+<form method="POST" action="/reviews/<%= review._id %>">
+  <label>Rating (1-5):</label>
+  <input type="number" name="rating" min="1" max="5" value="<%= review.rating %>" required />
+  <br />
+  <label>Comment:</label>
+  <textarea name="comment"><%= review.comment %></textarea>
+  <br />
+  <button type="submit">Update Review</button>
+</form>
+
+<%- include('partials/footer') %>

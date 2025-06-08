@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<h2>Books</h2>
+
+<form method="GET" action="/books">
+  <input type="text" name="author" placeholder="Filter by author" value="<%= filters.author %>" />
+  <input type="text" name="genre" placeholder="Filter by genre" value="<%= filters.genre %>" />
+  <button type="submit">Filter</button>
+</form>
+
+<ul>
+  <% books.forEach(book => { %>
+    <li>
+      <a href="/books/<%= book._id %>"><%= book.title %></a> by <%= book.author %> (<%= book.genre %>)
+    </li>
+  <% }) %>
+</ul>
+
+<div>
+  <% if (currentPage > 1) { %>
+    <a href="?page=<%= currentPage - 1 %>">&lt; Prev</a>
+  <% } %>
+  Page <%= currentPage %> of <%= totalPages %>
+  <% if (currentPage < totalPages) { %>
+    <a href="?page=<%= currentPage + 1 %>">Next &gt;</a>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

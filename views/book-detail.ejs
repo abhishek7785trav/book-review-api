@@ -1,0 +1,49 @@
+<%- include('partials/header', { user: userId }) %>
+<h2><%= book.title %> by <%= book.author %></h2>
+<p><strong>Genre:</strong> <%= book.genre %></p>
+<p><strong>Description:</strong> <%= book.description || 'No description' %></p>
+<p><strong>Average Rating:</strong> <%= avgRating %></p>
+
+<h3>Reviews</h3>
+
+<ul>
+  <% reviews.forEach(review => { %>
+    <li>
+      <strong><%= review.user.username %></strong> rated: <%= review.rating %>/5<br />
+      <%= review.comment || '' %><br />
+      <% if (userId && userId.toString() === review.user._id.toString()) { %>
+        <a href="/reviews/<%= review._id %>/edit">Edit</a> |
+        <form style="display:inline" method="POST" action="/reviews/<%= review._id %>/delete" onsubmit="return confirm('Delete review?');">
+          <button type="submit">Delete</button>
+        </form>
+      <% } %>
+    </li>
+  <% }) %>
+</ul>
+
+<div>
+  <% if (currentPage > 1) { %>
+    <a href="?page=<%= currentPage - 1 %>">&lt; Prev</a>
+  <% } %>
+  Page <%= currentPage %> of <%= totalPages %>
+  <% if (currentPage < totalPages) { %>
+    <a href="?page=<%= currentPage + 1 %>">Next &gt;</a>
+  <% } %>
+</div>
+
+<% if (userId) { %>
+  <h3>Add a Review</h3>
+  <form method="POST" action="/reviews/books/<%= book._id %>/reviews">
+    <label>Rating (1-5):</label>
+    <input type="number" name="rating" min="1" max="5" required />
+    <br />
+    <label>Comment:</label>
+    <textarea name="comment"></textarea>
+    <br />
+    <button type="submit">Submit Review</button>
+  </form>
+<% } else { %>
+  <p><a href="/login">Login</a> to add a review.</p>
+<% } %>
+
+<%- include('partials/footer') %>
